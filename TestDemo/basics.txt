@@ -1,0 +1,61 @@
+*** Test Cases ***
+log
+    log    hello world
+
+set_var
+    ${a}    Set variable    hello world
+    log    ${a}
+
+create_list
+    ${var1}    Create List    a    b    c
+    log    ${var1}
+    logmany    ${var1}
+
+if
+    ${a}    Set Variable    59
+    run keyword if    ${a}>=90    log    优秀
+    ...    ELSE IF    ${a}>70    log    良好
+    ...    ELSE IF    ${a}>=60    log    及格
+    ...    ELSE    log    不及格
+
+for
+    : FOR    ${i}    IN RANGE    11
+    \    log    ${i}
+
+evaluate1
+    ${d}    Evaluate    random.randint(1000, 9999)    random
+    log    ${d}
+
+evaluate2
+    Evaluate    os.chdir("D:\\project\\RIDE")    os
+    Evaluate    os.system("python print_aaa.py")    os
+
+import
+    Import Library    D:\\project\\RIDE\\add.py
+    ${result1}    add    4    5
+    log    ${result1}
+    ${a}    Evaluate    int(4)
+    ${b}    Evaluate    int(5)
+    ${result2}    add    ${a}    ${b}
+    log    ${result2}
+
+connect
+    ${str}    拼接    hello    world
+    log    ${str}
+
+import2
+    复制场景    http://h5.eqxiu.com/s/PXr7DGL4    13366248096    aaa123
+
+import3
+    复制场景    http://m.eqxiu.com/s/hf88T0fG    caozijun007@163.com    aaa123
+
+*** Keywords ***
+拼接
+    [Arguments]    ${a}    ${b}
+    ${c}    Catenate    ${a}    ${b}
+    [Return]    ${c}
+
+复制场景
+    [Arguments]    ${url}    ${usr}    ${psw}
+    ImportLibrary    D:\\project\\work_test_py\\eqxiu_copyer.py
+    main_copyer    ${url}    ${usr}    ${psw}

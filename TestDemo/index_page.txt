@@ -1,0 +1,20 @@
+*** Settings ***
+Resource          mykeyword.txt
+
+*** Keywords ***
+登录页面
+    [Arguments]    ${username}    ${pwd}
+    点击登录按钮
+    切换至登录frame
+    输入用户名    ${username}
+    输入密码    ${pwd}
+    登录
+    Sleep    1
+    切换至主frame
+
+登录结果检查
+    [Arguments]    ${expected}    ${current}    ${result}
+    [Documentation]    检查登录是否成功
+    ${current_url}    返回当前网址
+    run keyword if    ${result} == "True"    ShouldBeEqual    ${expected}     ${current}
+    ...    else    ShouldNotBeEqual    ${expected}     ${current}

@@ -1,0 +1,64 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+Resource          mykeyword.txt
+Resource          index_page.txt
+Resource          flow.txt
+
+*** Test Cases ***
+LoginDemo
+    OpenBrowser    http://www.eqxiu.com/    browser=chrome
+    MaximizeBrowserWindow
+    ClickLink    xpath=/html/body/div[3]/div[1]/header/div/div[1]/ul/li[5]/a
+    InputText    id=username    caozijun007@163.com
+    InputText    css=input[type='password']    aaa123
+    ClickLink    id=submit-button
+
+Login
+    用户登录    caozijun007@163.com    aaa123
+    登录结果检查    Pass
+    关闭浏览器
+
+register
+    [Tags]    basic
+    Open Browser    http://www.eqxiu.com/    Chrome
+    MaximizeBrowserWindow
+    Click Link    id=registerFormBtn
+    Sleep    1
+    Click Link    xpath=//*[@id='wrap-register']/form/div[2]/div[1]/div[5]/a[2]
+    Input Text    name=userEmail    20160605001@163.com
+    Input Text    name=repeatPass    aaa123
+    Click Link    registerBtn
+    Sleep    3
+    Click Link    css=.bbs-help-tip
+    Sleep    1
+    Click Link    css=.bbs-help-tip
+    PageShouldContain    H5场景
+    Close Browser
+
+NewLogin
+    OpenBrowser    http://eqxiu.com/home    browser=chrome
+    MaximizeBrowserWindow
+    ClickLink    xpath=//*[@id="home"]/header/div/div[1]/ul/li[5]/a
+    SelectFrame    xpath=//*[@id="ngdialog1"]/div[2]/div/iframe
+    InputText    xpath=//*[@id="input_username"]    caozijun007@163.com
+    InputText    xpath=//*[@id="eqi_view"]/div/div[2]/div[4]/input    aaa123
+    ClickButton    id=submit
+    Sleep    5
+    CloseAllBrowsers
+
+EasyLogin
+    打开浏览器    http://eqxiu.com/home
+    点击登录按钮
+    切换至登录frame
+    输入用户名    caozijun007@163.com
+    输入密码    aaa123
+    登录
+    Sleep    5
+    切换至主frame
+    检查当前网址    http://www.eqxiu.com/main
+    关闭浏览器
+
+EasierLogin
+    用户登录    caozijun007@163.com    aaa123    返回当前网址    http://www.eqxiu.com/main    True
+    用户登录    caozijun007@163.com    aaa1234    返回当前网址    http://www.eqxiu.com/main    False

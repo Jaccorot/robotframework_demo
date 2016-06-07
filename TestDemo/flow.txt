@@ -1,0 +1,7 @@
+*** Keywords ***
+用户登录
+    [Arguments]    ${username}    ${psw}    ${expected}    ${current}    ${result}
+    打开浏览器    http://eqxiu.com/home
+    登录页面    ${username}    ${psw}
+    登录结果检查    ${expected}     ${current}      ${result}
+    关闭浏览器

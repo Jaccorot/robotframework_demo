@@ -1,0 +1,45 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+关闭浏览器
+    CloseAllBrowsers
+
+打开浏览器
+    [Arguments]    ${url}
+    OpenBrowser    ${url}    browser=chrome
+    MaximizeBrowserWindow
+
+检查登录失败
+    PageShouldContain    密码错误
+
+检查登录成功
+    PageShouldContain    H5场景
+
+点击登录按钮
+    ClickLink    xpath=/html/body/div[3]/div[1]/header/div/div[1]/ul/li[5]/a
+
+登录
+    ClickButton    id=submit
+
+输入密码
+    [Arguments]    ${pwd}
+    InputText    xpath=//*[@id="eqi_view"]/div/div[2]/div[4]/input    ${pwd}
+
+输入用户名
+    [Arguments]    ${user}
+    InputText    xpath=//*[@id="input_username"]    ${user}
+
+切换至登录frame
+    SelectFrame    xpath=//*[@id="ngdialog1"]/div[2]/div/iframe
+
+切换至主frame
+    UnselectFrame
+
+检查当前网址
+    [Arguments]    ${expected_url}
+    LocationShouldBe    ${expected_url}
+
+返回当前网址
+    ${current_url}    GetLocation
+    [Return]    ${current_url}
